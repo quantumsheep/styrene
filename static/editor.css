@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+* {
+  box-sizing: content-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #2d2d2d;
+  color: #fff;
+}
+
+.editor {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 8px;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: solid 1px #4f4f4f;
+}
+
+.display {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+.display>* {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}
+
+.source {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.source-files {
+  display: flex;
+  justify-content: space-between;
+}
+
+.source-files>button {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.source-files-list {
+  width: 100%;
+  display: flex;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.5);
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.source-files-list::-webkit-scrollbar {
+  display: none;
+}
+
+.source-files-list>div {
+  width: 150px;
+  flex-shrink: 0;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.source-files-list>div:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.source-files-list>div:last-child {
+  border-radius: 0px 10px 10px 0px;
+}
+
+.source-files-list>div.selected {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.pdf>* {
+  height: 100%;
+  width: 100%;
+}
+
+button {
+  border: none;
+  padding: 6px 16px;
+  border-radius: 2px;
+  transition: all .1s;
+  background: linear-gradient(to right, #a8e063, #56ab2f);
+}
+
+button:hover {
+  background-color: rgb(104, 206, 104);
+  cursor: pointer;
+}
+
+.scale-hover:hover {
+  transform: scale(1.02);
+}
+
+.toast {
+  cursor: initial;
+}
+
+.toast .toast-close {
+  cursor: pointer;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}

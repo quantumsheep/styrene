@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LaTeX Editor</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+        integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism-tomorrow.min.css"
+        integrity="sha256-xevuwyBEb2ZYh4nDhj0g3Z/rDBnM569hg9Vq6gEw/Sg=" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="/static/prism-live.css">
+    <link rel="stylesheet" href="/static/editor.css">
+</head>
+
+<body>
+    <div class="editor">
+        <div class="header">
+            <button class="button scale-hover" id="compile">Compile [<span id="save-shortcut">Ctrl+S</span>]</button>
+        </div>
+        <div class="display">
+            <div class="source">
+                <div class="source-files">
+                    <div class="source-files-list" id="filelist"></div>
+                    <button type="button" id="addfile">+</button>
+                </div>
+                <textarea class="prism-live language-latex" id="source" spellcheck="false"
+                    autocomplete="off"></textarea>
+            </div>
+            <div class="pdf" id="pdf"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blissfuljs/1.0.6/bliss.min.js"
+        integrity="sha256-GSnaSCd4Fi9pE81WFatrguRBtbPIapD4rW8gc+o0CLo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-core.min.js"
+        integrity="sha256-Y+Budm2wBEjYjbH0qcJRmLuRBFpXd0VKxl6XhdS4hgA=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/autoloader/prism-autoloader.min.js"
+        integrity="sha256-ht8ay6ZTPZfuixYB99I5oRpCLsCq7Do2LjEYLwbe+X8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-latex.min.js"
+        integrity="sha256-ZtZPoFWj7O+UCo0WIPJAzPc2LdWsTzwk3TG6iZLhgxI=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="/static/prism-live.js"></script>
+    <script src="/static/editor.js"></script>
+</body>
+
+</html>

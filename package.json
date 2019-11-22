@@ -1,0 +1,20 @@
+{
+  "name": "web-latex-editor",
+  "version": "0.1.0",
+  "private": true,
+  "main": "app.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "QuantumSheep <nathanael.dmc@outlook.fr>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "node-latex": "^2.6.2",
+    "string-to-stream": "^3.0.1"
+  },
+  "devDependencies": {},
+  "description": ""
+}
