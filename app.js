@@ -44,5 +44,5 @@ app.get('/examples/:file', async (req, res) => {
   res.sendFile(path.join(examples_directory, req.params.file))
 })
 
-const PORT = 4000
+const PORT = 8080
 app.listen(PORT, () => console.log(`Starting at http://localhost:${PORT}`))
