@@ -12,10 +12,10 @@ const body_parser = require('body-parser')
 app.use(body_parser.urlencoded({ extended: false }))
 app.use(body_parser.json())
 
-app.use('/static', express.static(path.resolve('static')))
+app.use('/static', express.static(path.resolve(__dirname, 'static')))
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve('index.html'))
+  res.sendFile(path.resolve(__dirname, 'index.html'))
 })
 
 const empty_buffer = Buffer.from([0x0])
@@ -31,7 +31,7 @@ app.post('/compile', (req, res) => {
   pdf.on('error', () => res.send(empty_buffer))
 })
 
-const examples_directory = path.resolve('examples')
+const examples_directory = path.resolve(__dirname, 'examples')
 const get_examples = () => fs.readdir(examples_directory)
 
 app.get('/examples', async (req, res) => {
