@@ -4,6 +4,13 @@
 Write and Compile LaTeX in the browser.
 
 # Self-hosting
+## Docker
+```bash
+docker run -d --name=styrene -p 8080:8080 quantumsheep/styrene
+```
+
+See [quantumsheep/styrene](https://hub.docker.com/r/quantumsheep/styrene) image for further information.
+
 ## From sources
 First, clone the repository to the specified directory and install the required `npm` modules.
 ```bash
@@ -16,14 +23,6 @@ To start the server, use the `start` script.
 ```bash
 npm start
 ```
-
-## Docker
-```bash
-docker run -d --name=styrene -p 8080:8080 quantumsheep/styrene
-```
-
-See [quantumsheep/styrene](https://hub.docker.com/r/quantumsheep/styrene) image for further information.
-
 
 # Screenshots
 Because pictures speak louder than words.
