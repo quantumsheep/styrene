@@ -1,4 +1,3 @@
-const string_to_stream = require('string-to-stream')
 /** @type {import('node-latex').default} */
 const latex = require('node-latex')
 const express = require('express')
@@ -22,9 +21,7 @@ const empty_buffer = Buffer.from([0x0])
 app.post('/compile', (req, res) => {
   if (!req.body.source) return res.send(empty_buffer)
 
-  const input = string_to_stream(req.body.source, 'utf-8')
-
-  const pdf = latex(input)
+  const pdf = latex(req.body.source)
 
   res.contentType('application/pdf')
   pdf.pipe(res)
