@@ -241,7 +241,10 @@ void async function () {
       this.source.dispatchEvent(new Event('input'))
       this.update_filelist()
       this.remove_embed_pdf()
-      this.compile()
+
+      if (this.source.value) {
+        this.compile()
+      }
     }
 
     save_files() {
