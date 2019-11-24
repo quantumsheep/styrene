@@ -9,8 +9,6 @@ Write and Compile LaTeX in the browser.
 docker run -d --name=styrene -p 8080:8080 quantumsheep/styrene
 ```
 
-See [quantumsheep/styrene](https://hub.docker.com/r/quantumsheep/styrene) image for further information.
-
 ### Why is the image so heavy (~670MB)?
 I used [`texlive`](https://pkgs.alpinelinux.org/package/edge/community/x86/texlive) alpine package to run `pdflatex` with all the LaTeX packages needed, which are very large because of all the dependencies and sub packages used.
 
