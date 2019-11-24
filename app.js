@@ -6,6 +6,7 @@ const path = require('path')
 const fs = require('fs').promises
 
 const app = express()
+app.set('trust proxy', true)
 
 const body_parser = require('body-parser')
 app.use(body_parser.urlencoded({ extended: false }))
@@ -17,6 +18,17 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'index.html'))
 })
 
+/**
+ * @param {import('express').Request} req 
+ * @param {boolean} error 
+ */
+function log(req, error = false) {
+  const now = new Date()
+  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+
+  console.log(`[${now.toUTCString()}] [${ip}] Sended ${req.body.source.length} bytes buffer.${error ? ' (error)' : ''}`)
+}
+
 const empty_buffer = Buffer.from([0x0])
 app.post('/compile', (req, res) => {
   if (!req.body.source) return res.send(empty_buffer)
@@ -25,7 +37,11 @@ app.post('/compile', (req, res) => {
 
   res.contentType('application/pdf')
   pdf.pipe(res)
-  pdf.on('error', () => res.send(empty_buffer))
+  pdf.on('error', () => {
+    res.send(empty_buffer)
+    log(req, true)
+  })
+  pdf.on('end', () => log(req, false))
 })
 
 const examples_directory = path.resolve(__dirname, 'examples')
