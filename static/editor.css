@@ -14,6 +14,11 @@ body {
   color: #fff;
 }
 
+img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
 .editor {
   height: 100%;
   display: flex;
@@ -21,9 +26,14 @@ body {
 }
 
 .header {
+  height: 30px;
   padding: 8px;
   display: flex;
   justify-content: space-around;
+}
+
+.header>div {
+  width: 100%;
 }
 
 .display {
@@ -75,6 +85,7 @@ body {
   flex-shrink: 0;
   padding: 5px;
   background-color: rgba(0, 0, 0, 0.25);
+  border-right: solid 1px #262626;
 }
 
 .source-files-list>div:hover {
@@ -82,9 +93,9 @@ body {
   cursor: pointer;
 }
 
-.source-files-list>div:last-child {
+/* .source-files-list>div:last-child {
   border-radius: 0px 10px 10px 0px;
-}
+} */
 
 .source-files-list>div.selected {
   background-color: #21252f;
@@ -96,6 +107,7 @@ body {
 }
 
 button {
+  height: 18px;
   border: none;
   padding: 6px 16px;
   border-radius: 2px;
@@ -130,4 +142,8 @@ button:hover {
 
 textarea[class*="language-"] {
   border-right: solid 1px #21252f;
+}
+
+.center {
+  text-align: center;
 }
