@@ -57,6 +57,27 @@ void async function () {
     return base64
   }
 
+  function toast(type, text) {
+    let background_color = '#fff'
+
+    switch (type) {
+      case 'error':
+        background_color = 'linear-gradient(to right, #ed213a, #93291e)'
+        break
+    }
+
+    Toastify({
+      text,
+      duration: 3000,
+      close: true,
+      gravity: 'top',
+      position: 'right',
+      backgroundColor: background_color,
+      stopOnFocus: true,
+      className: 'toast'
+    }).showToast()
+  }
+
   class Editor {
     constructor() {
       this.source = document.getElementById('source')
@@ -65,6 +86,8 @@ void async function () {
 
       this.filelist = document.getElementById('filelist')
       this.addfile_button = document.getElementById('addfile')
+
+      this.filelist_editing_tags = []
 
       this.init_files()
       this.init_current()
@@ -128,16 +151,7 @@ void async function () {
       const bytes = new Uint8Array(buffer)
 
       if (!bytes || (bytes.length === 1 && bytes[0] === 0x0)) {
-        Toastify({
-          text: 'LaTeX Syntax Error.',
-          duration: 3000,
-          close: true,
-          gravity: 'top',
-          position: 'right',
-          backgroundColor: 'linear-gradient(to right, #ed213a, #93291e)',
-          stopOnFocus: true,
-          className: 'toast'
-        }).showToast();
+        toast('error', 'LaTeX Syntax Error.')
       } else {
         const base64 = bytes_to_base64(bytes)
 
@@ -174,19 +188,130 @@ void async function () {
       }
 
       for (const file of this.files) {
-        const tab = document.createElement('div')
-        tab.innerText = file.name
+        if (this.filelist_editing_tags.includes(file.name)) {
+          const tab = document.createElement('form')
+          tab.classList.add('tab')
 
-        if (file.name === this.current) {
-          tab.classList.add('selected')
+          const fake_submit = document.createElement('button')
+          fake_submit.type = 'submit'
+          fake_submit.hidden = true
+          tab.appendChild(fake_submit)
+
+          const input = document.createElement('input')
+          input.value = file.name
+
+          const buttons = document.createElement('span')
+          buttons.classList.add('tab-buttons')
+
+          const submit_btn = document.createElement('img')
+          submit_btn.src = '/static/enter-arrow.svg'
+          submit_btn.addEventListener('click', (e) => {
+            fake_submit.click()
+          })
+
+          buttons.appendChild(submit_btn)
+
+          tab.appendChild(input)
+          tab.appendChild(buttons)
+
+          tab.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            if (!input.value) {
+              toast('error', "The file's name should not be empty.")
+              return false;
+            }
+
+            if (this.files.find(f => f !== file && f.name === input.value)) {
+              toast('error', 'Another tab already have this name.')
+              return false;
+            }
+
+            this.filelist_editing_tags = this.filelist_editing_tags.filter(tag => tag !== file.name)
+
+            const tmp = file.name
+            file.name = input.value
+
+            if (this.current == tmp) {
+              this.set_current(file.name)
+            } else {
+              this.update_filelist()
+            }
+
+            this.save_files()
+          })
+
+          if (file.name === this.current) {
+            tab.classList.add('selected')
+          }
+
+          this.filelist.appendChild(tab)
+        } else {
+          const tab = document.createElement('div')
+          tab.classList.add('tab')
+
+          const name = document.createElement('span')
+          name.innerText = file.name
+          name.classList.add('tab-title')
+
+          const buttons = document.createElement('span')
+          buttons.classList.add('tab-buttons')
+
+          const edit_btn = document.createElement('img')
+          edit_btn.src = '/static/edit.svg'
+          edit_btn.addEventListener('click', (e) => {
+            e.preventDefault()
+            e.stopPropagation()
+
+            this.filelist_editing_tags.push(file.name)
+            this.update_filelist()
+          })
+
+          const delete_btn = document.createElement('img')
+          delete_btn.src = '/static/delete.svg'
+          delete_btn.addEventListener('click', (e) => {
+            if (this.current === file.name) {
+              let next = this.files.findIndex(f => f.name == this.current) + 1
+
+              if (this.files.length > next) {
+                next = Math.max(this.files.length - 1, 0)
+              }
+
+              if (this.files.length > next) {
+                this.set_current(this.files[next].name)
+              } else {
+                localStorage.removeItem('current')
+                this.set_source('')
+                this.remove_embed_pdf()
+              }
+            }
+
+            this.files = this.files.filter(f => f.name !== file.name)
+            this.save_files()
+            this.update_filelist()
+          })
+
+          buttons.appendChild(edit_btn)
+          buttons.appendChild(delete_btn)
+
+          tab.appendChild(name)
+          tab.appendChild(buttons)
+
+          tab.addEventListener('click', (e) => {
+            if (e.target !== tab && e.target !== name) {
+              return false;
+            }
+
+            e.preventDefault()
+            this.set_current(file.name)
+          })
+
+          if (file.name === this.current) {
+            tab.classList.add('selected')
+          }
+
+          this.filelist.appendChild(tab)
         }
-
-        tab.addEventListener('click', (e) => {
-          e.preventDefault()
-          this.set_current(file.name)
-        })
-
-        this.filelist.appendChild(tab)
       }
     }
 
@@ -230,14 +355,23 @@ void async function () {
     set_current(name) {
       this.current = name
       localStorage.setItem('current', name)
-      this.source.value = this.files.find(f => f.name === name).data
-      this.source.dispatchEvent(new Event('input'))
+
+      const file = this.files.find(f => f.name === name)
+      if (file) {
+        this.set_source(file.data)
+      }
+
       this.update_filelist()
       this.remove_embed_pdf()
 
       if (this.source.value) {
         this.compile()
       }
+    }
+
+    set_source(value) {
+      this.source.value = value
+      this.source.dispatchEvent(new Event('input'))
     }
 
     save_files() {
