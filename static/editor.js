@@ -228,13 +228,6 @@ void async function () {
     }
 
     set_current(name) {
-      if (this.current) {
-        this.set_file(this.current, {
-          data: source.value,
-          set_current: false,
-        })
-      }
-
       this.current = name
       localStorage.setItem('current', name)
       this.source.value = this.files.find(f => f.name === name).data
