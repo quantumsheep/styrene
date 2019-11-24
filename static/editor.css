@@ -10,7 +10,7 @@ html, body {
 
 body {
   font-family: 'Lato', sans-serif;
-  background-color: #2d2d2d;
+  background-color: #14171d;
   color: #fff;
 }
 
@@ -24,7 +24,6 @@ body {
   padding: 8px;
   display: flex;
   justify-content: space-around;
-  border-bottom: solid 1px #4f4f4f;
 }
 
 .display {
@@ -60,7 +59,8 @@ body {
 .source-files-list {
   width: 100%;
   display: flex;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.5);
+  border-top: solid 1px #21252f;
+  border-bottom: solid 1px #21252f;
   overflow-y: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -78,7 +78,7 @@ body {
 }
 
 .source-files-list>div:hover {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #21252f;
   cursor: pointer;
 }
 
@@ -87,7 +87,7 @@ body {
 }
 
 .source-files-list>div.selected {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #21252f;
 }
 
 .pdf>* {
@@ -122,4 +122,12 @@ button:hover {
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
+}
+
+:not(pre)>code[class*="language-"], pre[class*="language-"] {
+  background: none;
+}
+
+textarea[class*="language-"] {
+  border-right: solid 1px #21252f;
 }
