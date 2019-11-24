@@ -1,6 +1,6 @@
 FROM node:12-alpine
 
-RUN apk add texlive
+RUN apk add texlive-dvi
 
 WORKDIR /usr/src/app
 
