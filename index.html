@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Styrene</title>
 
+    <meta name="description" content="Write and Compile LaTeX in the browser.">
+
     <link rel="icon" href="/static/favicon.ico">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
@@ -25,7 +27,8 @@
                 <img src="/static/logo-full.png" title="logo">
             </div>
             <div class="center">
-                <button class="button scale-hover" id="compile">Compile [<span id="save-shortcut">Ctrl+S</span>]</button>
+                <button class="button scale-hover" id="compile">Compile [<span
+                        id="save-shortcut">Ctrl+S</span>]</button>
             </div>
             <div></div>
         </div>
@@ -35,8 +38,8 @@
                     <div class="source-files-list" id="filelist"></div>
                     <button type="button" id="addfile">+</button>
                 </div>
-                <textarea class="prism-live language-latex" id="source" spellcheck="false"
-                    autocomplete="off"></textarea>
+                <textarea class="prism-live language-latex" id="source" spellcheck="false" autocomplete="off"
+                    aria-label="source"></textarea>
             </div>
             <div class="pdf" id="pdf"></div>
         </div>
